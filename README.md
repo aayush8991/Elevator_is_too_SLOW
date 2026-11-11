@@ -4,7 +4,7 @@
 
 This project simulates a building's lifts second by second. It compares today's two-system layout with a proposed layout of dedicated lifts, and reports the average wait and trip time for every floor.
 
-![Python 3](https://img.shields.io/badge/python-3-3776AB?logo=python&logoColor=white) ![No dependencies](https://img.shields.io/badge/dependencies-none-brightgreen) ![Discrete time](https://img.shields.io/badge/model-discrete--time-orange)
+![Python 3](https://img.shields.io/badge/python-3-3776AB?logo=python&logoColor=white) ![Discrete time](https://img.shields.io/badge/model-discrete--time-orange)
 
 **Jump to:** [At a glance](#at-a-glance) · [The two layouts](#the-two-layouts) · [How the model works](#how-the-model-works) · [Results](#results) · [Findings](#findings) · [Sensitivity checks](#sensitivity-checks) · [Limitations](#limitations) · [Next steps](#next-steps) · [Running the simulation](#running-the-simulation)
 
@@ -273,42 +273,3 @@ Parking saves 1 to 1.5 s in both layouts, and the new layout still wins by 1.8 s
 2. **Decide on parking.** Parking idle lifts at the ground floor saves about 1 s in both layouts (see Sensitivity checks).
 3. **Test peak-hour traffic.** A morning burst from the ground floor would show how both layouts cope when demand is uneven over time.
 4. **Test a breakdown.** In the new layout, a failed ground lift leaves its floor with no service at all. In the current layout, the other five lifts in that team keep serving the floors.
-
----
-
-## Project structure
-
-```text
-Elevator_is_too_SLOW/
-├── README.md
-├── Current_System/
-│   ├── lift_simulation.py     simulator for the current two-system layout
-│   └── results.csv            per-floor results (4,000 people, 1 hour)
-└── New_System/
-    ├── lift_simulation.py     simulator for the dedicated-lift layout
-    └── results.csv            per-floor results (same settings)
-```
-
----
-
-## Running the simulation
-
-Requires Python 3 only (standard library). Tested with Python 3.12.
-
-```bash
-cd Current_System                           # or New_System
-python3 lift_simulation.py                  # defaults: 4,000 people, 1 hour, seed 1
-python3 lift_simulation.py --window 900     # same people in a 15-minute window
-python3 lift_simulation.py --seed 3         # a different random seed
-python3 lift_simulation.py --csv out.csv    # also save the per-floor table
-```
-
-| Option | Default | Meaning |
-|---|---:|---|
-| `--people` | 4000 | number of passengers |
-| `--window` | 3600 | seconds over which requests arrive |
-| `--floor-time` | 1 | seconds to travel one floor |
-| `--dwell` | 5 | seconds the doors stay open at each stop |
-| `--capacity` | 10 | maximum passengers assigned to one lift |
-| `--seed` | 1 | random seed |
-| `--csv` | none | write the per-floor table to a file |
